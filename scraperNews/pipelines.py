@@ -16,6 +16,7 @@ class ScrapernewsPipeline(object):
         self.curr = self.conn.cursor()
     
     def create_table(self):
+        self.curr.execute("""DROP TABLE IF EXISTS news""")
         self.curr.execute("""CREATE TABLE news (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     Title Text NOT NULL)
                     """)
