@@ -1,8 +1,7 @@
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
-from scrapy.utils.log import configure_logging
-from scrapy.utils.project import get_project_settings
+
 
 class Tecmundo(scrapy.Spider):
     name= "Tecmundo"
@@ -16,7 +15,5 @@ class Tecmundo(scrapy.Spider):
             yield item
 
 
-runner = CrawlerRunner(get_project_settings())
-d = runner.crawl(Tecmundo)
-d.addBoth(lambda _: reactor.stop())
-reactor.run()
+
+

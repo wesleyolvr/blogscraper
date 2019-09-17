@@ -9,7 +9,7 @@ def db_select():
     con = sqlite3.connect(path)
     cur = con.cursor()
     sql = """
-    SELECT Title
+    SELECT Title,
     FROM news
     """
     cur.execute(sql)
