@@ -3,4 +3,6 @@ a page that will display the headlines of the featured news at the beginning of 
 
 ## Usage
 Command to feed the database with the scraped news.
-```./manage.py capturar_noticias```
+```bash
+./manage.py capturar_noticias
+```
