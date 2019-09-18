@@ -4,19 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Django News</title>
 </head>
 <body>
-        <h1>Book List</h1>
-        {% if news_titles %}
-        <ul>
-          {% for news in news_titles %}
-          <li>
-                <a href="{{ news.pk }}">{{ news.id }}</a> ({{news.title_new}})
-          </li>
-          {% endfor %}
-        </ul>
-        {% endif %} 
+  <form method="GET" action="">
+    <input type="text" name='query' placeholder="Search News">
+    <input type="submit" value="Search">
+  </form>
+  <h1>News List</h1>
+  {% if queryset %}
+  <ul>
+    {% for news in queryset %}
+    <li>
+          <a href="{{ news.pk }}">{{ news.id }}</a> ({{news.title_new}})
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %} 
+  <ul>
+      {% for new in object_list %}
+        <li>
+          {{ new.title_new }}
+        </li>
+      {% endfor %}
+    </ul>
+
+       
     
 </body>
 </html>

@@ -6,18 +6,24 @@ import sqlite3
    
 
 def home(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello!")
 
 
 class ListView(ListView):
     model = News
-    context_object_name = 'news_titles'
+    template_name = 'core/news_list.html'
+    ordering = ['-created']
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        queryset = News.objects.all()
+        if query:
+            object_list = queryset.filter(title_new__icontains=query)
+        else:
+            return queryset
+        return object_list
+
     
-
-
-
-
-
 def save_news(request):
     try:
         objs_titles = [t.title_new for t in News.objects.all()]
