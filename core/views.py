@@ -8,7 +8,7 @@ import sqlite3
 
 class ListView(ListView):
     model = News
-    template_name = 'core/news_list.html'
+    template_name = 'news_list.html'
     ordering = ['-created']
 
     def get_queryset(self):

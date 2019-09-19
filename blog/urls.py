@@ -19,5 +19,5 @@ from core.views import list_news
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',list_news)
+    path('',list_news,name='lista')
 ]
