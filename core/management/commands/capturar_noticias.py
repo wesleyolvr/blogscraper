@@ -6,8 +6,11 @@ from twisted.internet import reactor
 
 @click.command()
 def command():
-    runner = CrawlerRunner(get_project_settings())
-    d = runner.crawl(Tecmundo)
-    d.addBoth(lambda _: reactor.stop())
-    reactor.run()
-    click.secho('done!')
+    try:
+        runner = CrawlerRunner(get_project_settings())
+        d = runner.crawl(Tecmundo)
+        d.addBoth(lambda _: reactor.stop())
+        reactor.run()
+        click.secho('done!')
+    except:
+        click.secho('erro command!')

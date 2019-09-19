@@ -5,9 +5,12 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 import sqlite3
+from scrapy.exceptions import DropItem
+
 
 class ScrapernewsPipeline(object):
     def __init__(self):
+        self.titles_seen = set()
         self.create_connection()
         self.create_table()
     
@@ -28,5 +31,9 @@ class ScrapernewsPipeline(object):
         self.conn.commit()
 
     def process_item(self, item, spider):
-        self.store_db(item)
-        return item
+        if item['Title_new'] in self.titles_seen:
+            raise DropItem("Duplicate item found: %s" % item)
+        else:
+            self.titles_seen.add(item['Title_new'])
+            self.store_db(item)
+            return item

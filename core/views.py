@@ -24,11 +24,14 @@ class ListView(ListView):
 list_news = ListView.as_view()
     
 def save_news():
+    """
+    saves mynews.db data captured by the crawler and creates the objects in the app core database, verifying the uniqueness of the objects.
+    """
     try:
         objs_titles = [t.title_new for t in News.objects.all()]
     except:
         objs_titles = News.objects.all()
-    dados = db_select()
+    dados = list(set(db_select()))
     for d in dados:
         if objs_titles:
             if d[0] not in objs_titles:
