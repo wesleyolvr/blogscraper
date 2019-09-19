@@ -7,11 +7,13 @@
     <title>Django News</title>
 </head>
 <body>
+    
   <form method="GET" action="">
     <input type="text" name='query' placeholder="Search News Title ">
     <input type="submit" value="Search">
+    
   </form>
-  <h1>News List</h1>
+  <h1><a href="{% url 'lista' %}">HOME</a></h1>
   <!-- {% if queryset %}
   <ul>
     {% for news in queryset %}
@@ -22,6 +24,7 @@
   </ul>
   {% endif %}  -->
   {% if object_list %}
+  <h1>News List</h1>
   <ul>
       {% for new in object_list %}
         <li>

@@ -1,16 +1,14 @@
 import djclick as click
 from scraperNews.spiders.tecmundo import Tecmundo
+from scraperNews.spiders.olhardigital import OlharDigital
 from scrapy.utils.project import get_project_settings
-from scrapy.crawler import CrawlerRunner
+from scrapy.crawler import CrawlerRunner,CrawlerProcess
 from twisted.internet import reactor
+from scrapy.utils.log import configure_logging
 
 @click.command()
 def command():
-    try:
-        runner = CrawlerRunner(get_project_settings())
-        d = runner.crawl(Tecmundo)
-        d.addBoth(lambda _: reactor.stop())
-        reactor.run()
-        click.secho('done!')
-    except:
-        click.secho('erro command!')
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(Tecmundo)
+    process.crawl(OlharDigital)
+    process.start()
