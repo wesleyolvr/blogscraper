@@ -5,9 +5,6 @@ from django.views.generic import ListView
 import sqlite3
    
 
-def home(request):
-    return HttpResponse("Hello!")
-
 
 class ListView(ListView):
     model = News
@@ -15,6 +12,7 @@ class ListView(ListView):
     ordering = ['-created']
 
     def get_queryset(self):
+        save_news()
         query = self.request.GET.get('query')
         queryset = News.objects.all()
         if query:
@@ -23,8 +21,9 @@ class ListView(ListView):
             return queryset
         return object_list
 
+list_news = ListView.as_view()
     
-def save_news(request):
+def save_news():
     try:
         objs_titles = [t.title_new for t in News.objects.all()]
     except:
@@ -38,7 +37,7 @@ def save_news(request):
         else:
             new = News(title_new=d[0])
             new.save()
-    return HttpResponse("dados salvos no banco")
+
 
 
 

@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import ListView,home,save_news
+from core.views import list_news
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home',home),
-    path('',save_news),
-    path('lista',ListView.as_view())
+    path('',list_news)
 ]
