@@ -1,40 +1,90 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Django News</title>
-</head>
-<body>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .column {
+      float: left;
+      width: 25%;
+    }
     
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      flex: 25%;
+      max-width: 25%;
+      padding: 10px;
+    }
+
+    .column img {
+      margin-top: 8px;
+      vertical-align: middle;
+      width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      }
+    }
+  </style>
+  <title>Django News</title>
+</head>
+
+<body>
+
   <form method="GET" action="">
     <input type="text" name='query' placeholder="Search News Title ">
     <input type="submit" value="Search">
-    
+
   </form>
   <h1><a href="{% url 'lista' %}">HOME</a></h1>
-  <!-- {% if queryset %}
-  <ul>
-    {% for news in queryset %}
-    <li>
-          <a href="{{ news.pk }}">{{ news.id }}</a> ({{news.title_new}})
-    </li>
-    {% endfor %}
-  </ul>
-  {% endif %}  -->
   {% if object_list %}
   <h1>News List</h1>
-  <ul>
-      {% for new in object_list %}
-        <li>
-          {{new.id}} - {{ new.title_new }}
-        </li>
-      {% endfor %}
-    </ul>
-    {%endif%}
+  {%endif%}
+ 
+  {% for new in object_list %}
+  {% if forloop.counter|divisibleby:4 %}
+  {% endif %}
+    <div class="column">
+      <h4>{{ new.title_new }}
+      </h4>
+      {% if new.pic %}
+      <img src="{{new.pic}}" />
+      {% else %}
+      <img src="https://neilpatel.com/wp-content/uploads/2019/05/ilustracao-panda-com-problema-error-404-not-found.jpeg" />
+      {%endif%}
+    </div>
+ 
+  {% endfor %}
 
-       
-    
+
+
+
+
 </body>
+
 </html>

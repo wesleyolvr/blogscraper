@@ -28,18 +28,28 @@ def save_news():
     saves mynews.db data captured by the crawler and creates the objects in the app core database, verifying the uniqueness of the objects.
     """
     try:
-        objs_titles = [t.title_new for t in News.objects.all()]
+        objs= News.objects.all()
+        objs_titles = [t.title_new for t in objs]
     except:
         objs_titles = News.objects.all()
     dados = list(set(db_select()))
+    
     for d in dados:
         if objs_titles:
             if d[0] not in objs_titles:
+                if d[1]:
+                    new = News(title_new=d[0],pic=d[1])
+                    new.save()
+                else:
+                    new = News(title_new=d[0])
+                    new.save()
+        else:
+            if d[1]:
+                new = News(title_new=d[0],pic=d[1])
+                new.save()
+            else:
                 new = News(title_new=d[0])
                 new.save()
-        else:
-            new = News(title_new=d[0])
-            new.save()
 
 
 
@@ -49,7 +59,7 @@ def db_select():
     con = sqlite3.connect(path)
     cur = con.cursor()
     sql = """
-    SELECT Title FROM news
+    SELECT Title,Pic FROM news
     """
     cur.execute(sql)
     data = cur.fetchall()

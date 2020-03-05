@@ -1,6 +1,8 @@
 import scrapy
+from scrapy import Request
 from scrapy.crawler import CrawlerRunner
 from twisted.internet import reactor
+from random import randint
 
 
 class Tecmundo(scrapy.Spider):
@@ -9,7 +11,14 @@ class Tecmundo(scrapy.Spider):
 
     def parse(self,response):
         item = {}
-        news = response.xpath("//h3[@class='tec--card__title']/a/text()").extract()
-        for new in news:
-            item['Title_new'] = new
+        noticias = response.xpath('//figure[@class="tec--card__thumb"]//img')
+        for new in noticias:
+            item['Title_new'] = new.xpath('@alt').extract_first().replace('Imagem de: ','')
+            item['Picture'] = new.xpath('@data-src').extract_first()
             yield item
+            
+    
+            
+        
+
+        

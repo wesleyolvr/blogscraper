@@ -21,14 +21,21 @@ class ScrapernewsPipeline(object):
     def create_table(self):
         self.curr.execute("""DROP TABLE IF EXISTS news""")
         self.curr.execute("""CREATE TABLE news (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                    Title Text NOT NULL)
+                    Title Text NOT NULL, Pic Text )
                     """)
 
     def store_db(self,item):
         Title = item['Title_new']
-        sql = """INSERT INTO news(Title) VALUES("{}")""".format(Title)
-        self.curr.execute(sql)
-        self.conn.commit()
+        try:
+            Pic = item['Picture']
+            sql = """INSERT INTO news(Title,Pic) VALUES("{}","{}")""".format(Title,Pic)
+            self.curr.execute(sql)
+            self.conn.commit()
+        except:
+            sql = """INSERT INTO news(Title) VALUES("{}")""".format(Title)
+            self.curr.execute(sql)
+            self.conn.commit()
+        
 
     def process_item(self, item, spider):
         if item['Title_new'] in self.titles_seen:
@@ -37,3 +44,4 @@ class ScrapernewsPipeline(object):
             self.titles_seen.add(item['Title_new'])
             self.store_db(item)
             return item
+        
