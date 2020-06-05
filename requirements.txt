@@ -9,7 +9,7 @@ constantly==15.1.0
 cryptography==2.7
 cssselect==1.1.0
 Deprecated==1.2.6
-Django==2.2.8
+Django==2.2.13
 django-click==2.1.0
 hyperlink==19.0.0
 idna==2.8
